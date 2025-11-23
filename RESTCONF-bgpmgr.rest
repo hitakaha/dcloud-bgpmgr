@@ -1,0 +1,45 @@
+# Sample RESTCONF commands. Use REST Client in VSCode
+
+##1. Get address
+GET http://localhost:8080/restconf/data/tailf-ncs:devices/device=xr-1/address
+Authorization: Basic admin admin
+#Accept: application/yang-data+json
+
+###
+# 2. Device live-status
+POST http://localhost:8080/restconf/operations/tailf-ncs:devices/device=xr-1/live-status/exec/show
+Authorization: Basic admin admin
+Content-Type: application/yang-data+xml
+
+<show>
+<args>bgp ipv4 unicast summary</args>
+</show>
+
+###
+# 3. Configure BGP
+POST http://localhost:8080/restconf/data/
+Authorization: Basic admin admin
+Content-Type: application/yang-data+json
+
+{
+  "bgpmgr:bgpmgr": [
+    {
+      "name": "test1",
+      "dev1": "xr-1",
+      "dev2": "xr-2",
+      "dev1-as": 100,
+      "dev2-as": 200
+    }
+  ]
+}
+
+###
+# 4. Delete BGP
+DELETE http://localhost:8080/restconf/data/bgpmgr:bgpmgr=test1/
+Authorization: Basic admin admin
+
+
+###
+
+
+
